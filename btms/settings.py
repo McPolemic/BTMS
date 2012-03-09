@@ -71,6 +71,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     "/Users/adam/software/programming/btms/static/",
+    '/app/btms/static/',
 )
 
 # List of finder classes that know how to find static files in
@@ -103,6 +104,7 @@ ROOT_URLCONF = 'btms.urls'
 
 TEMPLATE_DIRS = (
     '/Users/adam/software/programming/btms/templates',
+    '/app/btms/templates',
 )
 
 INSTALLED_APPS = (
