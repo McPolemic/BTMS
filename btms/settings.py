@@ -70,7 +70,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    "/Users/adam/software/programming/btms/static/",
+    "/Users/adam/software/programming/btms_heroku/btms/static/",
     '/app/btms/static/',
 )
 
@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'btms.urls'
 
 TEMPLATE_DIRS = (
-    '/Users/adam/software/programming/btms/templates',
+    '/Users/adam/software/programming/btms_heroku/btms/templates',
     '/app/btms/templates',
 )
 
