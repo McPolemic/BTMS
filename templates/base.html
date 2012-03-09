@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>{% block title %}BTMS{% endblock %}</title>
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">BTMS</a>
+                <div class="nav-collapse">
+                    {% block nav %}
+                    <ul class="nav">
+                        <li class="active"><a href="#">Timesheet</a></li>
+                        <li><a href="#about">Search</a></li>
+                        <li><a href="#contact">Reports</a></li>
+                    </ul>
+                    {% endblock %}
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div><!-- end navbar -->
+
+    <div class="container">
+        {% block body %}
+        <!-- Main hero unit for a primary marketing message or call to action -->
+        <div class="hero-unit">
+            <h1>Body</h1>
+            <p>This is the body.</p>
+            <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>
