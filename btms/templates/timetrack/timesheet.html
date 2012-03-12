@@ -46,12 +46,12 @@
                     <td>20.2</td>
                     <td></td>
                 </tr>
-                {% for d in data %}
+                {% for t in tasks %}
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ t.status.co_num }}</td>
+                    <td>{{ t.status.task_name }}</td>
+                    <td>{{ t.status.status_name }}</td>
+                    <td>{{ t.date }}</td>
                     <td></td>
                     <td></td>
                     <td></td>
