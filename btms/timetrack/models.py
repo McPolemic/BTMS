@@ -2,7 +2,7 @@ from django.db import models
 
 """A CO/Status Combination"""
 class Status(models.Model):
-    co_num = models.IntegerField()
+    co_num = models.IntegerField('CO Number')
     task_name = models.CharField(max_length=50)
     status_name = models.CharField(max_length=30)
 
