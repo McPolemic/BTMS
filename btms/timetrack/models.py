@@ -6,6 +6,9 @@ class Status(models.Model):
     task_name = models.CharField(max_length=50)
     status_name = models.CharField(max_length=30)
 
+    class Meta:
+        verbose_name_plural = 'Statuses'
+
 """Task that happened in a workday"""
 class Task(models.Model):
     user = models.CharField(max_length=30)
@@ -36,3 +39,6 @@ class Task(models.Model):
 class MyTask(models.Model):
     user = models.CharField(max_length=30)
     status = models.ForeignKey(Status)
+
+    class Meta:
+        verbose_name_plural = 'My Tasks'
