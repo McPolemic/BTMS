@@ -9,6 +9,9 @@ class Status(models.Model):
     class Meta:
         verbose_name_plural = 'Statuses'
 
+    def __unicode__(self):
+        return '%d - %s - %s' % (self.co_num, self.task_name, self.status_name)
+
 """Task that happened in a workday"""
 class Task(models.Model):
     user = models.CharField(max_length=30)
@@ -34,6 +37,9 @@ class Task(models.Model):
 
     english_time.short_description = "Time"
     frac_hours.short_description = "Hours (Fraction)"
+
+    def __unicode__(self):
+        return '%s - %s - %s' % (self.user, self.date, self.status)
 
 """A MyTask is a Status tied to a user for quick use"""
 class MyTask(models.Model):
