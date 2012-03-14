@@ -20,7 +20,10 @@ class Status(models.Model):
         verbose_name_plural = 'Statuses'
 
     def __unicode__(self):
-        return '%d - %s - %s' % (self.co_num, self.task_name, self.status_name)
+        if self.co_num:
+            return '%d - %s - %s' % (self.co_num, self.role, self.description)
+        else:
+            return '%s - %s' % (self.role, self.description)
 
 """Task that happened in a workday"""
 class Task(models.Model):
