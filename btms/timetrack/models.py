@@ -1,10 +1,20 @@
 from django.db import models
 
-"""A CO/Status Combination"""
+"""A CO/Status Combination
+
+This represents one unique thing that a user can do."""
 class Status(models.Model):
-    co_num = models.IntegerField('CO Number')
-    task_name = models.CharField(max_length=50)
-    status_name = models.CharField(max_length=30)
+    STATUS_ROLES = (('D', 'Developer'),
+                    ('T', 'TFAL'),
+                    ('P', 'PM'),
+                    ('B', 'Business Analyst'),
+                    ('E', 'Tester'),
+                   )
+    role = models.CharField(max_length=1, choices=STATUS_ROLES)
+
+    co_num = models.IntegerField('CO Number', blank=True, null=True)
+    #status_name = models.CharField(max_length=30)
+    description = models.CharField(max_length=50)
 
     class Meta:
         verbose_name_plural = 'Statuses'
