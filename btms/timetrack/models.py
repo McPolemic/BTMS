@@ -4,16 +4,9 @@ from django.db import models
 
 This represents one unique thing that a user can do."""
 class Status(models.Model):
-    STATUS_ROLES = (('D', 'Developer'),
-                    ('T', 'TFAL'),
-                    ('P', 'PM'),
-                    ('B', 'Business Analyst'),
-                    ('E', 'Tester'),
-                   )
-    role = models.CharField(max_length=1, choices=STATUS_ROLES)
-
     co_num = models.IntegerField('CO Number', blank=True, null=True)
     description = models.CharField(max_length=50)
+    role = models.CharField(max_length=30)
 
     class Meta:
         verbose_name_plural = 'Statuses'
