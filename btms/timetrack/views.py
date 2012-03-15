@@ -3,8 +3,8 @@ from django.template import RequestContext
 from models import Status,Task,MyTask
 
 def index(request):
-    tasks = Task.objects.filter(user = "adam")
-    my_tasks = MyTask.objects.filter(user = "adam")
+    tasks = Task.objects.all()
+    my_tasks = MyTask.objects.all()
     return render_to_response('timetrack/timesheet.html',
                               {'tasks': tasks,
                                'my_tasks': my_tasks},
