@@ -13,7 +13,6 @@ class Status(models.Model):
     role = models.CharField(max_length=1, choices=STATUS_ROLES)
 
     co_num = models.IntegerField('CO Number', blank=True, null=True)
-    #status_name = models.CharField(max_length=30)
     description = models.CharField(max_length=50)
 
     class Meta:
