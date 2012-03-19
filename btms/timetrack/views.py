@@ -54,7 +54,7 @@ def weekly(request, year, month, day):
         
         for t in tasks_for_status:
             #the array index is the weekday (0 for Sunday, 1 for Monday, etc.)
-            index = t.date.weekday() - 1 % 7
+            index = (t.date.weekday() + 1) % 7
             week_status['values'][index] += t.frac_hours()
 
         week_status['total'] = sum(week_status['values'])        
