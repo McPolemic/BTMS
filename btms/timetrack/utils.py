@@ -9,15 +9,11 @@ def find_week_from_date_with_offset(t, offset):
     delta_offset = timedelta(offset)
     return find_week_from_date(t+delta_offset)
 
-def find_start_date_from_week(y, w):
-    """Returns a date object for the Monday of a specified week"""
-    year = int(y)
-    week = int(w)
-    t = date(year, 1, 1)
-    delta = timedelta(week * 7)
-    target = t + delta
+def find_start_date_from_date(t):
+    """Returns a date object for the Sunday directly before a specified date"""
+    # weekday gives us monday = 0 ... sunday = 6.  Add 1 and modulo 7 to get
+    # sunday = 0 .. saturday = 6
+    weekday = (t.weekday() + 1) % 7
+    delta = timedelta(weekday)
 
-    diff = timedelta(target.weekday())
-    monday = target - diff
-
-    return monday
+    return t - delta
