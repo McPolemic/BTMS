@@ -56,7 +56,8 @@ def weekly(request, year, month, day):
             #the array index is the weekday (0 for Sunday, 1 for Monday, etc.)
             index = t.date.weekday() - 1 % 7
             week_status['values'][index] += t.frac_hours()
-        
+
+        week_status['total'] = sum(week_status['values'])        
         week.append(week_status)
     
     #Fill out the totals for the week
