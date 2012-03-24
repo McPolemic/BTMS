@@ -35,19 +35,17 @@ def weekly(request, year, month, day):
     #filter(user = request.user.username)
 
     week = []    
-    status_name_list = [str(status) for status in status_list]
-    status_name_list.sort()
 
     #FIXME
-    for status_name in status_name_list:
+    for status in status_list:
         #Construct week-long object if status happened this week
         week_status = {}
-        week_status['name'] = status_name
+        week_status['status'] = status
         
         #Initialize fractional hour display to all 0s
         week_status['values'] = [0.0 for i in range(7)]
 
-        tasks_for_status = [t for t in task_list if str(t.status) == status_name]
+        tasks_for_status = [t for t in task_list if t.status == status]
 
         if tasks_for_status == None:
             continue
@@ -61,14 +59,14 @@ def weekly(request, year, month, day):
         week.append(week_status)
     
     #Fill out the totals for the week
-    total = [0.0 for i in range(7)]
+    totals = [0.0 for i in range(7)]
 
     for i in range(7):
         for week_status in week:
-            total[i] += week_status['values'][i]
+            totals[i] += week_status['values'][i]
     
-    week.append({'name': 'Total',
-                 'values': total})
+    week.append({'status': Status(description='Total'),
+                 'values': totals})
     
     tasks = Task.objects.filter(date = date_target)
     #Add to tasks end when we implement users

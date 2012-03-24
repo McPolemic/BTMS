@@ -28,12 +28,12 @@
                 </tr>
             </thead>
             <tbody>
-                {% for status in week %}
+                {% for line in week %}
                 <tr>
-                    <td></td>
-                    <td>{{ status.name }}</td>
-                    {% for value in status.values %}
-                        {% if status.name == "Total" %}
+                    <td>{{ line.status.co_num|default:"" }}</td>
+                    <td>{% if line.status.role %}{{ line.status.role }} - {% endif %}{{ line.status.description }}</td>
+                    {% for value in line.values %}
+                        {% if line.status.description == "Total" %}
                             {% if value %}
                             <td class="time_entry">{{ value|floatformat }}</td>
                             {% else %}
@@ -47,7 +47,7 @@
                             {% endif %}
                         {% endif %}
                     {% endfor %}
-                    <td>{{ status.total }}</td>
+                    <td>{{ line.total }}</td>
                     <td></td>
                 </tr>
                 {% endfor %}

@@ -6,16 +6,19 @@ This represents one unique thing that a user can do."""
 class Status(models.Model):
     co_num = models.IntegerField('CO Number', blank=True, null=True)
     description = models.CharField(max_length=50)
-    role = models.CharField(max_length=30)
+    role = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Statuses'
 
     def __unicode__(self):
+        return_string = ''
         if self.co_num:
-            return '%d - %s - %s' % (self.co_num, self.role, self.description)
-        else:
-            return '%s - %s' % (self.role, self.description)
+            return_string += '%d - ' % self.co_num
+        if self.role:
+            return_string += '%s - ' % self.role
+        return_string += self.description
+        return return_string
 
 """Task that happened in a workday"""
 class Task(models.Model):
