@@ -57,15 +57,18 @@ class TestViews(TestCase):
         # 3/18/2012 is a Sunday (values offset 0)
         # 3/19/2012 is a Monday (values offset 1)
         response = self.client.get('/entry/2012/3/18/')
-        print response.context['week'][0]
-        self.assertEquals(response.context['week'][0]['name'], '14456 - Developer - Sample Status')
+        self.assertEquals(response.context['week'][0]['status'].co_num, 14456)
+        self.assertEquals(response.context['week'][0]['status'].role, 'Developer')
+        self.assertEquals(response.context['week'][0]['status'].description, 'Sample Status')
         self.assertEquals(response.context['week'][0]['values'][0], 1.5)
         self.assertEquals(response.context['week'][0]['values'][1], 2)
 
     def test_correct_status_total(self):
         # 3/18/2012 is a Sunday (values offset 0)
         response = self.client.get('/entry/2012/3/18/')
-        self.assertEquals(response.context['week'][0]['name'], '14456 - Developer - Sample Status')
+        self.assertEquals(response.context['week'][0]['status'].co_num, 14456)
+        self.assertEquals(response.context['week'][0]['status'].role, 'Developer')
+        self.assertEquals(response.context['week'][0]['status'].description, 'Sample Status')
         self.assertEquals(response.context['week'][0]['total'], 3.5)
 
 #Expects something like
