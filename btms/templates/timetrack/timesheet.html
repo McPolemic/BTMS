@@ -32,12 +32,12 @@
                 <tr>
                     <td>{{ line.status.co_num|default:"" }}</td>
                     <td>{% if line.status.role %}{{ line.status.role }} - {% endif %}{{ line.status.description }}</td>
-                    {% for value in line.values %}
+                    {% for v in line.values %}
                         {% if line.status.description == "Total" %}
-                            <td class="time_entry">{% if value %}{{ value|floatformat }}{% endif %}</td>
+                            <td class="time_entry">{% if v.value %}{{ v.value|floatformat }}{% endif %}</td>
                         {% else %}
                             <td class="time_entry">
-                                <input type="text" value="{% if value %}{{ value|floatformat }}{% endif %}" />
+                                <input type="text" name="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" value="{% if v.value %}{{ v.value|floatformat }}{% endif %}" />
                             </td>
                         {% endif %}
                     {% endfor %}

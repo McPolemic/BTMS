@@ -36,14 +36,13 @@ def weekly(request, year, month, day):
 
     week = []    
 
-    #FIXME
     for status in status_list:
         #Construct week-long object if status happened this week
         week_status = {}
         week_status['status'] = status
         
         #Initialize fractional hour display to all 0s
-        week_status['values'] = [0.0 for i in range(7)]
+        week_status['values'] = [{'date': day, 'value': 0.0} for day in day_of_week]
 
         tasks_for_status = [t for t in task_list if t.status == status]
 
@@ -53,17 +52,17 @@ def weekly(request, year, month, day):
         for t in tasks_for_status:
             #the array index is the weekday (0 for Sunday, 1 for Monday, etc.)
             index = (t.date.weekday() + 1) % 7
-            week_status['values'][index] += t.frac_hours()
+            week_status['values'][index]['value'] += t.frac_hours()
 
-        week_status['total'] = sum(week_status['values'])        
+        week_status['total'] = sum([week_status['values'][i]['value'] for i in range(7)])
         week.append(week_status)
     
     #Fill out the totals for the week
-    totals = [0.0 for i in range(7)]
+    totals = [{'date': day, 'value': 0.0} for day in day_of_week]
 
     for i in range(7):
         for week_status in week:
-            totals[i] += week_status['values'][i]
+            totals[i]['value'] += week_status['values'][i]['value']
     
     week.append({'status': Status(description='Total'),
                  'values': totals})
