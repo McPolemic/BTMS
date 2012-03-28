@@ -97,26 +97,43 @@ def weekly(request, year, month, day):
                                'day_curr': date_target,
                                'date_url': date_url,
                                'total':    total,
+                               
                                'debug':    settings.DEBUG},
                               context_instance=RequestContext(request))
 
 """Process the save action from the weekly timesheet"""
 def save_week(request, year, month, day):
+    # set up arrays for change log
+    task_added   = []
+    task_changed = []
+    task_deleted = []
+
     for key in request.POST.keys():
+        value = request.POST[key]
         # Check for field variables
         if key[:4] == 'date':
-            data = request.POST[key].split('_')
-            d = utils.string_date_to_date(data[0])
-            
+            data = key.split('_')
+            d = utils.string_date_to_date(data[0][4:])
+            t = int(data[1][4:])
 
-        print key, request.POST[key]
-    return HttpResponse(request.POST)
-    # (y, m, d) = (int(year), int(month), int(day))
-    # date_target = date(y,m,d)
-    # act_id = request.POST['activity']
-    # act = get_object_or_404(Activity, pk=act_id)
-    # minutes = 0
-    # hours = 0
-# 
-#     if request.POST['minutes']:
-##          minutes = int(request.POST['minutes'])
+            try:
+                task = Task.objects.get(date=d, status__id__exact=t)
+                if not value:
+                    print "Deleting " + key + ":" + value
+                    task_deleted.append(task)
+                elif task.frac_hours() != float(value):
+                    print "Changing " + key + " from " + str(task.frac_hours()) + " to " + value
+                    task_changed.append(task)
+                else:
+                    print "Existing task found: " + key + ":" + value
+            except Task.DoesNotExist:
+                # Ensure we only create tasks if they have a value
+                if value:
+                    print "New task found: " + key + ":" + value + " (" + str(task) + ")" 
+                    s = Status.objects.get(id__exact = t)
+                    task = Task(date=d, status=s, total_minutes=int(float(value)*60))
+                    task_added.append(task)
+
+    return HttpResponse('Added: '   + str(task_added)   + '<br />' + 
+                        'Changed: ' + str(task_changed) + '<br />' + 
+                        'Deleted: ' + str(task_deleted) + '<br />')
