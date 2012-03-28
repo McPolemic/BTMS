@@ -97,3 +97,16 @@ def weekly(request, year, month, day):
                                'total':    total,
                                'debug':    settings.DEBUG},
                               context_instance=RequestContext(request))
+
+"""Process the save action from the weekly timesheet"""
+def save_week(request, year, month, day):
+    return HttpResponse(request.POST)
+    # (y, m, d) = (int(year), int(month), int(day))
+    # date_target = date(y,m,d)
+    # act_id = request.POST['activity']
+    # act = get_object_or_404(Activity, pk=act_id)
+    # minutes = 0
+    # hours = 0
+# 
+#     if request.POST['minutes']:
+##          minutes = int(request.POST['minutes'])
