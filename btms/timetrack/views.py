@@ -42,7 +42,7 @@ def weekly(request, year, month, day):
         week_status['status'] = status
         
         #Initialize fractional hour display to all 0s
-        week_status['values'] = [{'date': day, 'value': 0.0} for day in day_of_week]
+        week_status['values'] = [{'date': d, 'value': 0.0} for d in day_of_week]
 
         tasks_for_status = [t for t in task_list if t.status == status]
 
@@ -58,7 +58,7 @@ def weekly(request, year, month, day):
         week.append(week_status)
     
     #Fill out the totals for the week
-    totals = [{'date': day, 'value': 0.0} for day in day_of_week]
+    totals = [{'date': d, 'value': 0.0} for d in day_of_week]
 
     for i in range(7):
         for week_status in week:
@@ -87,6 +87,7 @@ def weekly(request, year, month, day):
     week_next_link = reverse('timetrack.views.weekly', args=(ny,nm,nd))
     
     my_tasks = MyTask.objects.all()
+    date_url = "/".join((year, month, day))
     return render_to_response('timetrack/timesheet.html',
                               {'day_of_week': day_of_week,
                                'week':     week,
@@ -94,6 +95,7 @@ def weekly(request, year, month, day):
                                'week_next': week_next_link,
                                'my_tasks': my_tasks,
                                'day_curr': date_target,
+                               'date_url': date_url,
                                'total':    total,
                                'debug':    settings.DEBUG},
                               context_instance=RequestContext(request))
