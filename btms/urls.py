@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^$', 'timetrack.views.index'),
     url(r'^entry/$', 'timetrack.views.index'),
     url(r'^entry/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', 'timetrack.views.weekly'),
+    url(r'^entry/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/update/$', 'timetrack.views.save_week'),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

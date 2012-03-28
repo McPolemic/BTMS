@@ -102,6 +102,14 @@ def weekly(request, year, month, day):
 
 """Process the save action from the weekly timesheet"""
 def save_week(request, year, month, day):
+    for key in request.POST.keys():
+        # Check for field variables
+        if key[:4] == 'date':
+            data = request.POST[key].split('_')
+            d = utils.string_date_to_date(data[0])
+            
+
+        print key, request.POST[key]
     return HttpResponse(request.POST)
     # (y, m, d) = (int(year), int(month), int(day))
     # date_target = date(y,m,d)
