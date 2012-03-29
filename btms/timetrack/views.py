@@ -133,7 +133,10 @@ def save_week(request, year, month, day):
                     s = Status.objects.get(id__exact = t)
                     task = Task(date=d, status=s, total_minutes=int(float(value)*60))
                     task_added.append(task)
+    
+    response = 'Added: '   + str(task_added)   + '\n' + \
+               'Changed: ' + str(task_changed) + '\n' + \
+               'Deleted: ' + str(task_deleted) + '\n'
+    print response
 
-    return HttpResponse('Added: '   + str(task_added)   + '<br />' + 
-                        'Changed: ' + str(task_changed) + '<br />' + 
-                        'Deleted: ' + str(task_deleted) + '<br />')
+    return HttpResponseRedirect(reverse('timetrack.views.weekly', args=(year, month, day)))
