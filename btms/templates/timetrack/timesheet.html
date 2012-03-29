@@ -26,7 +26,6 @@
                     <th class="date_header">{{ day|date:"D" }}<p>{{ day|date:"m/d" }}</p></th>
                     {% endfor %}
                     <th>Total</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +43,6 @@
                         {% endif %}
                     {% endfor %}
                     <td><span id="task{{ line.status.id }}_total"></span></td>
-                    <td></td>
                 </tr>
                 {% endfor %}
             </tbody>
