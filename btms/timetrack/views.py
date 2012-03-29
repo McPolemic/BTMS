@@ -110,19 +110,25 @@ def save_week(request, year, month, day):
 
     for key in request.POST.keys():
         value = request.POST[key]
+
         # Check for field variables
         if key[:4] == 'date':
             data = key.split('_')
             d = utils.string_date_to_date(data[0][4:])
             t = int(data[1][4:])
+            if value:
+                minutes = int(float(value)*60)
 
             try:
                 task = Task.objects.get(date=d, status__id__exact=t)
                 if not value:
                     print "Deleting " + key + ":" + value
+                    task.delete()
                     task_deleted.append(task)
                 elif task.frac_hours() != float(value):
                     print "Changing " + key + " from " + str(task.frac_hours()) + " to " + value
+                    task.total_minutes = minutes
+                    task.save()
                     task_changed.append(task)
 
             except Task.DoesNotExist:
@@ -130,7 +136,7 @@ def save_week(request, year, month, day):
                 if value:
                     print "New task found: " + key + ":" + value + " (" + str(task) + ")" 
                     s = Status.objects.get(id__exact = t)
-                    task = Task(date=d, status=s, total_minutes=int(float(value)*60))
+                    task = Task(date=d, status=s, total_minutes=minutes)
                     task.save()
                     task_added.append(task)
     
