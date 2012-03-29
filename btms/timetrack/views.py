@@ -124,8 +124,7 @@ def save_week(request, year, month, day):
                 elif task.frac_hours() != float(value):
                     print "Changing " + key + " from " + str(task.frac_hours()) + " to " + value
                     task_changed.append(task)
-                else:
-                    print "Existing task found: " + key + ":" + value
+
             except Task.DoesNotExist:
                 # Ensure we only create tasks if they have a value
                 if value:
