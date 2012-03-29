@@ -17,3 +17,10 @@ def find_start_date_from_date(t):
     delta = timedelta(weekday)
 
     return t - delta
+
+def string_date_to_date(i):
+    """Converts '20120328' to date(2012, 3, 28)"""
+    y = int(i[:4])
+    m = int(i[4:6])
+    d = int(i[6:])
+    return date(y, m, d)

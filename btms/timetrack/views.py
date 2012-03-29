@@ -42,7 +42,7 @@ def weekly(request, year, month, day):
         week_status['status'] = status
         
         #Initialize fractional hour display to all 0s
-        week_status['values'] = [{'date': day, 'value': 0.0} for day in day_of_week]
+        week_status['values'] = [{'date': d, 'value': 0.0} for d in day_of_week]
 
         tasks_for_status = [t for t in task_list if t.status == status]
 
@@ -57,8 +57,8 @@ def weekly(request, year, month, day):
         week_status['total'] = sum([week_status['values'][i]['value'] for i in range(7)])
         week.append(week_status)
     
-    #Fill out the totals placeholder for the week
-    totals = [{'date': day, 'value': 0.0} for day in day_of_week]
+    #Fill out the totals for the week
+    totals = [{'date': d, 'value': 0.0} for d in day_of_week]
 
     week.append({'status': Status(description='Total'),
                  'values': totals})
@@ -82,6 +82,7 @@ def weekly(request, year, month, day):
     week_next_link = reverse('timetrack.views.weekly', args=(ny,nm,nd))
     
     my_tasks = MyTask.objects.all()
+    date_url = "/".join((year, month, day))
     return render_to_response('timetrack/timesheet.html',
                               {'day_of_week': day_of_week,
                                'week':     week,
@@ -89,6 +90,54 @@ def weekly(request, year, month, day):
                                'week_next': week_next_link,
                                'my_tasks': my_tasks,
                                'day_curr': date_target,
+                               'date_url': date_url,
                                'total':    total,
+                               
                                'debug':    settings.DEBUG},
                               context_instance=RequestContext(request))
+
+"""Process the save action from the weekly timesheet"""
+def save_week(request, year, month, day):
+    # set up arrays for change log
+    task_added   = []
+    task_changed = []
+    task_deleted = []
+
+    for key in request.POST.keys():
+        value = request.POST[key]
+
+        # Check for field variables
+        if key[:4] == 'date':
+            data = key.split('_')
+            d = utils.string_date_to_date(data[0][4:])
+            t = int(data[1][4:])
+            if value:
+                minutes = int(float(value)*60)
+
+            try:
+                task = Task.objects.get(date=d, status__id__exact=t)
+                if not value:
+                    print "Deleting " + key + ":" + value
+                    task.delete()
+                    task_deleted.append(task)
+                elif task.frac_hours() != float(value):
+                    print "Changing " + key + " from " + str(task.frac_hours()) + " to " + value
+                    task.total_minutes = minutes
+                    task.save()
+                    task_changed.append(task)
+
+            except Task.DoesNotExist:
+                # Ensure we only create tasks if they have a value
+                if value:
+                    print "New task found: " + key + ":" + value + " (" + str(task) + ")" 
+                    s = Status.objects.get(id__exact = t)
+                    task = Task(date=d, status=s, total_minutes=minutes)
+                    task.save()
+                    task_added.append(task)
+    
+    response = 'Added: '   + str(task_added)   + '\n' + \
+               'Changed: ' + str(task_changed) + '\n' + \
+               'Deleted: ' + str(task_deleted) + '\n'
+    print response
+
+    return HttpResponseRedirect(reverse('timetrack.views.weekly', args=(year, month, day)))
