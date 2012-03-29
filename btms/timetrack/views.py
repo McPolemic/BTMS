@@ -132,6 +132,7 @@ def save_week(request, year, month, day):
                     print "New task found: " + key + ":" + value + " (" + str(task) + ")" 
                     s = Status.objects.get(id__exact = t)
                     task = Task(date=d, status=s, total_minutes=int(float(value)*60))
+                    task.save()
                     task_added.append(task)
     
     response = 'Added: '   + str(task_added)   + '\n' + \
