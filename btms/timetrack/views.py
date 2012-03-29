@@ -57,13 +57,9 @@ def weekly(request, year, month, day):
         week_status['total'] = sum([week_status['values'][i]['value'] for i in range(7)])
         week.append(week_status)
     
-    #Fill out the totals for the week
+    #Fill out the totals placeholder for the week
     totals = [{'date': day, 'value': 0.0} for day in day_of_week]
 
-    for i in range(7):
-        for week_status in week:
-            totals[i]['value'] += week_status['values'][i]['value']
-    
     week.append({'status': Status(description='Total'),
                  'values': totals})
     
@@ -72,8 +68,7 @@ def weekly(request, year, month, day):
     #.filter(user = request.user.username)
 
     #Temp object to return total time.  Do not save.
-    total = Task(total_minutes = sum([t.total_minutes for t in tasks]))
-    remaining = 8 - total.frac_hours()
+    total = Task(total_minutes = 0)
 
     #Create previous and next week links
     one_week = timedelta(7)
