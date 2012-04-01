@@ -38,7 +38,7 @@
                             <td class="time_entry"><span id="date{{ v.date|date:"Ymd" }}_total">{% if v.value %}{{ v.value|floatformat }}{% endif %}</span></td>
                         {% else %}
                             <td class="time_entry">
-                                <input type="text" id="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" name="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" value="{% if v.value %}{{ v.value|floatformat }}{% endif %}" />
+                                <input type="text" id="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" name="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" {% if v.value %}value="{{ v.value|floatformat }}"{% endif %} />
                             </td>
                         {% endif %}
                     {% endfor %}
