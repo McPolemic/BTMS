@@ -56,3 +56,6 @@ class MyTask(models.Model):
 
     class Meta:
         verbose_name_plural = 'My Tasks'
+
+    def __unicode__(self):
+        return '%s - %s' % (self.user, self.status)
