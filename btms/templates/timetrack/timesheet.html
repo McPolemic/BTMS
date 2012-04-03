@@ -35,14 +35,14 @@
                     <td>{% if line.status.role %}{{ line.status.role }} - {% endif %}{{ line.status.description }}</td>
                     {% for v in line.values %}
                         {% if line.status.description == "Total" %}
-                            <td class="time_entry"><span id="date{{ v.date|date:"Ymd" }}_total">{% if v.value %}{{ v.value|floatformat }}{% endif %}</span></td>
+                            <td class="time_entry align_right"><span id="date{{ v.date|date:"Ymd" }}_total">{% if v.value %}{{ v.value|floatformat }}{% endif %}</span></td>
                         {% else %}
                             <td class="time_entry">
                                 <input type="text" id="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" name="date{{ v.date|date:"Ymd" }}_task{{ line.status.id }}" {% if v.value %}value="{{ v.value|floatformat }}"{% endif %} />
                             </td>
                         {% endif %}
                     {% endfor %}
-                    <td><span id="task{{ line.status.id }}_total"></span></td>
+                    <td class="align_right"><span id="task{{ line.status.id }}_total"></span></td>
                 </tr>
                 {% endfor %}
             </tbody>

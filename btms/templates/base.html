@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>{% block title %}BTMS{% endblock %}</title>
@@ -9,6 +10,10 @@ body {
     padding-top: 60px;
     padding-bottom: 40px;
 }
+input {
+    padding-top: 0;
+    padding-bottom: 0;
+}
 th.date_header {
     text-align: center;
 }
@@ -19,15 +24,19 @@ th.date_header p {
     float:right;
     margin-top: 18px;
 }
-.time_entry input{
-    width:36px;
-    margin-bottom:0;
+td.time_entry {
+    width: 44px;
+    text-align: right;
 }
-.time_entry {
-    text-align:center;
+.time_entry input{
+    width:30px;
+    margin-bottom:0;
 }
 .right {
     float:right;
+}
+.table td.align_right {
+    text-align: right;
 }
 
     </style>
