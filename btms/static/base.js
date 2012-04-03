@@ -78,5 +78,7 @@ $(document).ready(function() {
     //Set initial totals
     updateTotals();
 
+    $("input[type=text]").change(updateTotals);
+
 
 });
