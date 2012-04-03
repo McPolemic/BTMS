@@ -54,6 +54,31 @@
 <div class="row">
     <div class="span12">
         <h2>My Tasks</h2>
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>CO</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in my_tasks %}
+                <tr id="mytask_{{ m.status.id }}">
+                    <td>
+                        <div class="task-button-bar">
+                            <a href="#" onClick="addStatusRow({{ m.status.id }});"><img src="{{ STATIC_URL }}add_s.png" alt="Add"></a>
+                            <a href="#"><img src="{{ STATIC_URL }}del_s.png" alt="Delete"></a>
+                        </div>
+                    </td>
+                    <td>{{ m.status.co_num|default:"" }}</td>
+                    <td>{{ m.status.description }}</td>
+                    <td>{{ m.status.role }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}
