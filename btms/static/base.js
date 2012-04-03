@@ -42,6 +42,7 @@ function updateTotals()
     var ids = findIDs();
     var date_ids = ids[0];
     var status_ids = ids[1];
+    var grandTotal = 0;
 
     // Update the totals for each day
     for (var i = 0; i < date_ids.length; i++)
@@ -58,6 +59,7 @@ function updateTotals()
 
         $("span[id=" + date_ids[i] + "_total]").text(total);
         console.log("Setting total for " + date_ids[i] + " to " + total);
+        grandTotal += total;
     }
 
     // Update the totals for each status
@@ -77,7 +79,7 @@ function updateTotals()
         $("span[id=" + status_ids[i] + "_total]").text(total);
     }
 
-    console.log("External call: Is Document dirty? " + isPageChanged);
+    $("span[id=taskNone_total]").text(grandTotal);
 }
 
 function unsavedChangesWarning(e) {
