@@ -83,6 +83,12 @@ def weekly(request, year, month, day):
     
     my_tasks = MyTask.objects.all()
     date_url = "/".join((year, month, day))
+
+    status_count = None
+    if 'status_count' in request.session:
+        status_count = request.session['status_count']
+        del(request.session['status_count'])
+
     return render_to_response('timetrack/timesheet.html',
                               {'day_of_week': day_of_week,
                                'week':     week,
@@ -92,7 +98,7 @@ def weekly(request, year, month, day):
                                'day_curr': date_target,
                                'date_url': date_url,
                                'total':    total,
-                               
+                               'status_count': status_count,
                                'debug':    settings.DEBUG},
                               context_instance=RequestContext(request))
 
@@ -135,9 +141,8 @@ def save_week(request, year, month, day):
                     task.save()
                     task_added.append(task)
     
-    response = 'Added: '   + str(task_added)   + '\n' + \
-               'Changed: ' + str(task_changed) + '\n' + \
-               'Deleted: ' + str(task_deleted) + '\n'
-    print response
+    request.session['status_count'] = {'added':   len(task_added),
+                                       'changed': len(task_changed),
+                                       'deleted': len(task_deleted)}
 
     return HttpResponseRedirect(reverse('timetrack.views.weekly', args=(year, month, day)))

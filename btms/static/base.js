@@ -164,6 +164,9 @@ $(document).ready(function() {
     textFields.change(function() {isPageChanged = true;});
     textFields.change(updateTotals);
 
+    //Enable closing alert messages
+    $('.alert a[data-dismiss=alert]').click(function(){ $(this).parent().hide('slow')});
+
     //Don't warn about leaving page if hitting "Save"
     $("input[type=submit]").click(function() {window.onbeforeunload = null;});
 });
