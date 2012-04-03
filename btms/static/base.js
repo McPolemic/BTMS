@@ -1,3 +1,8 @@
+//Global variable telling us whether the page has been changed
+var isPageChanged = false;
+
+window.onbeforeunload = unsavedChangesWarning;
+
 function isKeyIn(key, array)
 {
     for (var i = 0; i < array.length; i++)
@@ -70,15 +75,22 @@ function updateTotals()
         });
 
         $("span[id=" + status_ids[i] + "_total]").text(total);
-        console.log("Setting total for " + status_ids[i] + " to " + total);
     }
+
+    console.log("External call: Is Document dirty? " + isPageChanged);
+}
+
+function unsavedChangesWarning(e) {
+    // Only fire if the page has been changed
+    if (isPageChanged)
+        return "Warning: You have unsaved changes.  Are you sure you want to leave?"
 }
 
 $(document).ready(function() {
     //Set initial totals
     updateTotals();
 
-    $("input[type=text]").change(updateTotals);
-
-
+    var textFields = $("input[type=text]");
+    textFields.change(function() {isPageChanged = true; console.log("Page dirty!");});
+    textFields.change(updateTotals);
 });
