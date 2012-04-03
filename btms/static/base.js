@@ -163,4 +163,7 @@ $(document).ready(function() {
     var textFields = $("input[type=text]");
     textFields.change(function() {isPageChanged = true;});
     textFields.change(updateTotals);
+
+    //Don't warn about leaving page if hitting "Save"
+    $("input[type=submit]").click(function() {window.onbeforeunload = null;});
 });

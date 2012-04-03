@@ -129,9 +129,9 @@ def save_week(request, year, month, day):
             except Task.DoesNotExist:
                 # Ensure we only create tasks if they have a value
                 if value:
-                    print "New task found: " + key + ":" + value + " (" + str(task) + ")" 
                     s = Status.objects.get(id__exact = t)
                     task = Task(date=d, status=s, total_minutes=minutes)
+                    print "New task found: " + key + ":" + value + " (" + str(task) + ")" 
                     task.save()
                     task_added.append(task)
     
